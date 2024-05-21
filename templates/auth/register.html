@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold text-center text-gray-800">Register</h2>
+
+        <!-- Error message placeholder -->
+         <div id="error" class="mb-4"></div>
+
+
+        <div class="mt-8 space-y-6">
+            
+            <form class="rounded-md shadow-sm -space-y-px flex flex-col gap-4"
+                method="POST" action="/register"
+                hx-post="/register" hx-target="#error" hx-swap="innerHTML"
+                HX-Redirect
+                >
+                <div class="mb-4">
+                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                    <input name="username" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                    <input name="email" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input name="password" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+
+                </div>
+                <div class="mb-4">
+                    <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                    <input name="confirm_password" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
+
+                </div>
+
+                <input 
+                type="submit" 
+                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
+                
+                
+                />
+            </form>
+            
+        </div>
+        <p class="mt-2 text-center text-sm text-gray-600">
+            Already have an account?
+            <a href="{{ url_for('auth.login') }}" class="font-medium text-indigo-600 hover:text-indigo-500">Sign In</a>
+
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+

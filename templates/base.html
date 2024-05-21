@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HS Social Media{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+</head>
+<body class="bg-gray-100">
+
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex justify-center flex-row items-center hover:cursor-pointer">
+                    <div class="flex-shrink-0">
+                        <a class="text-xl font-bold text-gray-800">HS Social Media</a>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Content Block -->
+   
+        {% block content %}
+        {% endblock %}
+   
+
+  
+</body>
+</html>
+
+<script defer>
+    document.body.addEventListener('htmx:beforeSwap', function(evt) {
+  // Allow 422 and 400 responses to swap
+  // We treat these as form validation errors
+  if (evt.detail.xhr.status === 422 || evt.detail.xhr.status === 400) {
+    evt.detail.shouldSwap = true;
+    evt.detail.isError = false;
+  }
+});
+</script>
