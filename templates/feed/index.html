@@ -8,10 +8,12 @@
             <!-- Post 1 -->
             <div class="bg-white rounded-lg shadow-md p-6">
                 <!-- Post Content -->
-                <h2 class="text-xl font-bold text-gray-800 mb-2">Post Title 1</h2>
-                <h4 class="text-xs text-gray-800 text-gray-800 mb-4">Tom Everson</h4>
+                {% for feed in feeds %}
 
-                <p class="text-gray-600 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris vitae tortor vestibulum, feugiat sapien vitae, ultrices nunc. Integer pretium magna in finibus.</p>
+                <h2 class="text-xl font-bold text-gray-800 mb-2">{{ feed.title }}</h2>
+                <h4 class="text-xs text-gray-800 text-gray-800 mb-4">{{ feed.user.username }}</h4>
+
+                <p class="text-gray-600 mb-4">{{ feed.content }}</p>
                 
 
                 <!-- Vote Buttons -->
@@ -31,10 +33,15 @@
                         </button>
                     </div>
                 </div>
+                {% endfor %}
             </div>
 
         </div>
     </div>
+
+    <a href="{{ url_for('feed.create_feed') }}" class="fixed bottom-10 right-10 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        Add Post
+    </a>
 </div>
 
 {% endblock %}

@@ -1,42 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HS Social Media</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+{% extends "base.html" %}
 
-</head>
-<body>
 
 
 {% block content %}
 <div class="flex items-center justify-center min-h-screen bg-gray-100">
     <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h2 class="text-2xl font-bold text-center text-gray-800">Login</h2>
-        <form class="mt-8 space-y-6" method="POST" action="/login">
-            
-            <form class="rounded-md shadow-sm -space-y-px">
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                    <input class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
 
+        <!-- Error message placeholder -->
+         <div id="error" class="mb-4"></div>
+
+
+        <div class="mt-8 space-y-6">
+            
+            <form class="rounded-md shadow-sm -space-y-px flex flex-col gap-4"
+                method="POST" action="/login"
+                hx-post="/login" hx-target="#error" hx-swap="innerHTML"
+                HX-Redirect
+                >
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input name="email" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
                 </div>
+
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
-
+                    <input name="password" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
                 </div>
+
+
+                <input 
+                type="submit" 
+                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
+                
+                
+                />
             </form>
-            <div>
-                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    Login
-                </button>
-            </div>
-        </form>
+            
+        </div>
         <p class="mt-2 text-center text-sm text-gray-600">
-            Don't Have An Account ?
+           Don't Have An Account?
             <a href="{{ url_for('auth.register') }}" class="font-medium text-indigo-600 hover:text-indigo-500">Register</a>
 
         </p>
@@ -44,5 +47,4 @@
 </div>
 {% endblock %}
 
-</body>
-</html>
+

@@ -1,9 +1,13 @@
 import random
 import string
-from flask import current_app, Response
+from flask import current_app
 import resend
 import uuid
+import jwt
+from datetime import datetime, timezone, timedelta
 import json
+
+SECRET_KEY = "12345"
 
 
 def generate_auth_code(username: str, email: str, password: str):
@@ -41,3 +45,17 @@ def confirm_auth_code(unique_code: str, auth_code: str):
     current_app.db.users.insert_one(info)
     current_app.redis.delete(unique_code)
     return True
+
+
+def encode_jwt(userId: str):
+    payload = {
+        'user_id': userId,
+        'exp': datetime.now(timezone.utc) + timedelta(hours=168)
+    }
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    return token
+
+
+def decode_jwt(token):
+    decoded_payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+    return decoded_payload
