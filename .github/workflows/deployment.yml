@@ -1,4 +1,4 @@
-name: Deploy Node js App to ECR
+name: Deploy Flask App To ECR
 
 on:
   push:
