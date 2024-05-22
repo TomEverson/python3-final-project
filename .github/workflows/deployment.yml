@@ -29,7 +29,7 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: python3-final-project
-          IMAGE_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+          IMAGE_TAG: python3-final-project
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
