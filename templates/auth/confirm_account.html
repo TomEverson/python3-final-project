@@ -11,7 +11,7 @@
 
 
         <div class="mt-8 space-y-6">
-            
+
             <form class="rounded-md shadow-sm -space-y-px flex flex-col gap-4"
                 method="POST" action="/confirm_account"
                 hx-boost=true hx-post="/confirm_account" hx-target="#error-message" hx-swap="innerHTML"
@@ -21,18 +21,18 @@
                     <label for="confirm_code" class="block text-sm font-medium text-gray-700">Code</label>
                     <input name="confirm_code" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" />
                 </div>
-               
 
-                <input 
-                type="submit" 
-                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" 
-                
-                
+
+                <input
+                type="submit"
+                class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+
+
                 />
             </form>
-            
+
         </div>
-       
+
     </div>
 </div>
 {% endblock %}
