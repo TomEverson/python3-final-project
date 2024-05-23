@@ -7,9 +7,10 @@ from pymongo.server_api import ServerApi
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
+MONGO_URI = os.environ.get("MONGO_URI")
 
 
 def connect_mongo():
-    client = MongoClient(os.environ.get("MONGO_URI"))
+    client = MongoClient(MONGO_URI)
     db = client["HS"]
     return db

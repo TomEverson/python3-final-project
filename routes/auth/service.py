@@ -49,7 +49,7 @@ def confirm_auth_code(unique_code: str, auth_code: str):
 
 def encode_jwt(userId: str):
     payload = {
-        'user_id': userId,
+        'userId': userId,
         'exp': datetime.now(timezone.utc) + timedelta(hours=168)
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')

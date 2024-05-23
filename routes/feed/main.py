@@ -1,34 +1,31 @@
-from flask import Blueprint, render_template, request, current_app, Response, redirect
+from flask import Blueprint, render_template, request, Response, redirect, g
 from routes.auth.service import decode_jwt
-from bson import ObjectId
+from routes.feed.service import get_feed_service, create_feed_service, create_feed_upvote_service, create_downvote_service
+
+feed = Blueprint('feed', __name__, url_prefix="/feeds")
 
 
-feed = Blueprint('feed', __name__)
-
-
-@feed.route("/feed", methods=["GET"])
-def get_feed_page():
+@feed.before_app_request
+def check_auth():
     cookie = request.cookies.get("access_token")
     if not cookie:
         return redirect("/login")
+    user = decode_jwt(cookie)
+    g.user = user
 
-    feeds = []
-    query = current_app.db.feeds.find()
-    for feed in query:
-        user = current_app.db.users.find_one({"_id": ObjectId(feed["userId"])})
-        feed['user'] = user
-        del user['password']
-        feeds.append(feed)
 
+@feed.route("/", methods=["GET"])
+def get_feed_page():
+    feeds = get_feed_service(g.user)
     return render_template("feed/index.html", feeds=feeds)
 
 
-@feed.route('/feed/create', methods=["GET"])
+@feed.route('/create', methods=["GET"])
 def get_feed_create_page():
     return render_template("feed/create.html")
 
 
-@feed.route('/feed/create', methods=["POST"])
+@feed.route('/create', methods=["POST"])
 def create_feed():
     title = request.form.get("title")
     content = request.form.get('content')
@@ -40,12 +37,21 @@ def create_feed():
     cookie = request.cookies.get("access_token")
     user = decode_jwt(cookie)
 
-    current_app.db.feeds.insert_one({"title": title,
-                                     "content": content,
-                                     "userId": user["user_id"]
-                                     })
+    create_feed_service(title, content, user)
 
     response = Response()
-    response.headers['HX-Redirect'] = "/feed"
+    response.headers['HX-Redirect'] = "/feeds"
 
     return response
+
+
+@feed.route('feeds/upvote/<feed_id>', methods=["POST"])
+def upvote_feed(feed_id):
+    feed = create_feed_upvote_service(feedId=feed_id, user=g.user)
+    return feed, 200
+
+
+@feed.route('feeds/downvote/<feed_id>', methods=["POST"])
+def downvote_feed(feed_id):
+    feed = create_downvote_service(feedId=feed_id, user=g.user)
+    return feed, 200

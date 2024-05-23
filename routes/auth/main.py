@@ -1,7 +1,14 @@
-from flask import Blueprint, render_template, Response, request, redirect, current_app
+from flask import Blueprint, render_template, Response, request, redirect, current_app, g
 from routes.auth.service import generate_auth_code, confirm_auth_code, encode_jwt, decode_jwt
 
 auth = Blueprint('auth', __name__)
+
+
+@auth.before_request
+def check_auth():
+    cookie = request.cookies.get("access_token")
+    if cookie:
+        return redirect('/feeds')
 
 
 @auth.route("/login", methods=["GET"])
@@ -27,7 +34,7 @@ def login():
     response = Response()
     response.set_cookie("access_token", value=jwt, max_age=604800,
                         expires=604800, path='/', domain=None, secure=None, httponly=False)
-    response.headers['HX-Redirect'] = "/feed"
+    response.headers['HX-Redirect'] = "/feeds"
     return response
 
 
@@ -82,7 +89,7 @@ def confirm_account():
 
     if (res == True):
         response = Response()
-        response.headers['HX-Redirect'] = "/"
+        response.headers['HX-Redirect'] = "/login"
         return response
 
     return res, 400
