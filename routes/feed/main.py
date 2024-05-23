@@ -5,7 +5,7 @@ from routes.feed.service import get_feed_service, create_feed_service, create_fe
 feed = Blueprint('feed', __name__, url_prefix="/feeds")
 
 
-@feed.before_app_request
+@feed.before_request
 def check_auth():
     cookie = request.cookies.get("access_token")
     if not cookie:

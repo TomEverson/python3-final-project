@@ -7,6 +7,7 @@ auth = Blueprint('auth', __name__)
 @auth.before_request
 def check_auth():
     cookie = request.cookies.get("access_token")
+    print(cookie)
     if cookie:
         return redirect('/feeds')
 
